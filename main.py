@@ -1,23 +1,33 @@
 import sys
 import random
 from PyQt6 import QtWidgets, QtGui, QtCore
-from PyQt6.uic import loadUi
 
 
 class YellowCirclesApp(QtWidgets.QMainWindow):
     def __init__(self):
         super().__init__()
-        loadUi("UI.ui", self)
+        self.initUI()
+
+    def initUI(self):
+        self.setGeometry(100, 100, 500, 500)
+        self.setWindowTitle('Git и случайные окружности')
+
+        self.pushButton = QtWidgets.QPushButton('Создать круги', self)
+        self.pushButton.setGeometry(200, 430, 100, 30)
         self.pushButton.clicked.connect(self.create_circle)
+
+        self.graphicsView = QtWidgets.QGraphicsView(self)
+        self.graphicsView.setGeometry(0, 0, 500, 400)
 
     def create_circle(self):
         scene = QtWidgets.QGraphicsScene()
         self.graphicsView.setScene(scene)
         for _ in range(random.randint(1, 10)):
             diameter = random.randint(10, 100)
+            color = QtGui.QColor(random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
             ellipse = QtWidgets.QGraphicsEllipseItem(0, 0, diameter, diameter)
-            ellipse.setBrush(QtGui.QBrush(QtCore.Qt.GlobalColor.yellow))
-            ellipse.setPos(random.randint(0, 300), random.randint(0, 300))
+            ellipse.setBrush(QtGui.QBrush(color))
+            ellipse.setPos(random.randint(0, 450), random.randint(0, 350))
             scene.addItem(ellipse)
 
 
